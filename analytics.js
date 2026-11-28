@@ -1,10 +1,12 @@
 if (location.origin === 'https://mengzijian451-cloud.github.io' &&
     location.pathname.startsWith('/resume/')) {
+  const goatCounter = 'https://mengzijian451-resume.goatcounter.com';
+  const downloadEvent = 'resume-pdf-download';
   const trackerReady = new Promise(resolve => {
     const script = document.createElement('script');
     script.src = 'https://gc.zgo.at/count.js';
     script.async = true;
-    script.dataset.goatcounter = 'https://mengzijian451-resume.goatcounter.com/count';
+    script.dataset.goatcounter = goatCounter + '/count';
     script.dataset.goatcounterSettings = JSON.stringify({ no_onload: true });
     script.addEventListener('load', () => resolve(window.goatcounter), { once: true });
     script.addEventListener('error', () => resolve(null), { once: true });
@@ -19,9 +21,43 @@ if (location.origin === 'https://mengzijian451-cloud.github.io' &&
 
   for (const link of document.querySelectorAll('a[data-resume-download]')) {
     link.addEventListener('click', () => recordHit({
-      path: 'resume-pdf-download',
+      path: downloadEvent,
       title: '简历 PDF 下载',
       event: true,
     }));
+  }
+
+  const stats = document.querySelector('[data-site-stats]');
+  if (stats) {
+    const views = stats.querySelector('[data-site-views]');
+    const downloads = stats.querySelector('[data-site-downloads]');
+    const note = stats.querySelector('[data-site-stats-note]');
+    const format = new Intl.NumberFormat('zh-CN');
+
+    async function readCount(path) {
+      const response = await fetch(`${goatCounter}/counter/${encodeURIComponent(path)}.json`, {
+        credentials: 'omit',
+      });
+      if (!response.ok && response.status !== 404) {
+        throw new Error('GoatCounter counts are unavailable');
+      }
+      const { count } = await response.json();
+      const digits = String(count).replace(/[\s,.'’]/g, '');
+      const value = Number(digits);
+      if (!/^\d+$/.test(digits) || !Number.isSafeInteger(value)) {
+        throw new Error('GoatCounter returned an invalid count');
+      }
+      return value;
+    }
+
+    Promise.all([readCount('TOTAL'), readCount(downloadEvent)]).then(([total, downloadCount]) => {
+      // The site total includes the PDF click event.
+      const pageviews = Math.max(0, total - downloadCount);
+      views.textContent = format.format(Number(views.textContent) + pageviews);
+      downloads.textContent = format.format(Number(downloads.textContent) + downloadCount);
+      note.textContent = '含起始值';
+    }).catch(() => {
+      // Keep the labeled starting values if public counts are unavailable.
+    });
   }
 }
