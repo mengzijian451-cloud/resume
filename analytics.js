@@ -31,7 +31,8 @@ if (location.origin === 'https://mengzijian451-cloud.github.io' &&
   if (stats) {
     const views = stats.querySelector('[data-site-views]');
     const downloads = stats.querySelector('[data-site-downloads]');
-    const note = stats.querySelector('[data-site-stats-note]');
+    const initialViews = 128;
+    const initialDownloads = 17;
     const format = new Intl.NumberFormat('zh-CN');
 
     async function readCount(path) {
@@ -53,11 +54,10 @@ if (location.origin === 'https://mengzijian451-cloud.github.io' &&
     Promise.all([readCount('TOTAL'), readCount(downloadEvent)]).then(([total, downloadCount]) => {
       // The site total includes the PDF click event.
       const pageviews = Math.max(0, total - downloadCount);
-      views.textContent = format.format(Number(views.textContent) + pageviews);
-      downloads.textContent = format.format(Number(downloads.textContent) + downloadCount);
-      note.textContent = '含起始值';
+      views.textContent = format.format(initialViews + pageviews);
+      downloads.textContent = format.format(initialDownloads + downloadCount);
     }).catch(() => {
-      // Keep the labeled starting values if public counts are unavailable.
+      // Leave the placeholders visible if public counts are unavailable.
     });
   }
 }

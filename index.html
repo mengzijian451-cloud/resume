@@ -32,10 +32,10 @@ body{background:#f7f8fa;color:var(--ink)}.shell{width:min(1240px,calc(100% - cla
 .media-dialog .native-view{display:block;overflow:auto;max-height:calc(90vh - 98px);background:#17202a;overscroll-behavior:contain}.media-dialog .native-view img{display:block;max-width:100%;max-height:calc(90vh - 100px);width:auto;height:auto;object-fit:contain;margin:auto}.media-dialog .native-view.is-native img{width:auto;height:auto;max-width:none;max-height:none;margin:0}.media-bar .image-tools{display:flex;align-items:center;gap:7px;flex-shrink:0}.media-bar [data-native]{font:inherit;cursor:pointer;border:1px solid #8a9aa7;background:transparent;color:inherit;padding:5px 8px}.media-bar p{line-height:1.45}.patent .media-open img{width:100%;height:clamp(190px,22vw,330px);object-fit:contain;background:#fff}.view-stage img,.list-media img{object-fit:contain}@media(max-width:500px){.media-bar{align-items:flex-start;flex-wrap:wrap}.media-bar p{font-size:13px}.media-bar .image-tools{margin-left:auto}.media-dialog .native-view{max-height:calc(87vh - 125px)}}
 .bar-tools{display:flex;align-items:center;gap:14px}
 .bar-tools>.action{flex:none;white-space:nowrap}
-.site-stats{display:grid;justify-items:center;gap:3px;color:#bec9d4;font-size:12px;line-height:1.15;font-variant-numeric:tabular-nums;white-space:nowrap}
-.site-stats-values{display:flex;align-items:baseline;gap:10px}
-.site-stats strong{color:#f1f4f9;font-size:13px;font-weight:700}
-.site-stats small{font-size:10px}
+.site-stats{display:inline-flex;align-items:center;flex:none;min-height:34px;border:1px solid #3a4b5e;border-radius:6px;background:#223142;color:#c9d4de;font-size:12px;line-height:1.15;font-variant-numeric:tabular-nums;white-space:nowrap}
+.site-stats>span{display:flex;align-items:baseline;gap:4px;padding:0 9px}
+.site-stats>span+span{border-left:1px solid #48596b}
+.site-stats strong{min-width:2ch;color:var(--gold);font-size:15px;font-weight:750;text-align:right}
 @media(max-width:820px){
   html{scroll-padding-top:102px}
   .bar{display:grid;grid-template-columns:minmax(0,1fr) auto}
@@ -45,23 +45,21 @@ body{background:#f7f8fa;color:var(--ink)}.shell{width:min(1240px,calc(100% - cla
 @media(max-width:540px){
   .bar .brand small{display:none}
   .bar-tools{gap:8px}
-  .site-stats-values{gap:6px}
+  .site-stats>span{padding-inline:6px}
 }
 @media(max-width:359px){
   .site-stats{font-size:11px}
+  .site-stats strong{font-size:14px}
   .bar-tools>.action{padding-inline:8px}
 }
-</style><script defer src="./analytics.js"></script>
+</style><script defer src="./analytics.js?v=2"></script>
 </head>
 <body><a class="skip" href="#main">跳到正文</a>
 <header class="top"><div class="shell bar"><a class="brand" href="#main"><strong>孟子鉴</strong><small>工业设备软件研发</small></a><nav class="nav" aria-label="简历导航"><a href="#skills">技术能力</a><a href="#projects">项目作品</a><a href="#experience">工作经历</a><a href="#contact">联系</a></nav>
 <div class="bar-tools">
   <div class="site-stats" data-site-stats role="group" aria-label="网站统计">
-    <div class="site-stats-values">
-      <span>浏览 <strong data-site-views>128</strong></span>
-      <span>下载 <strong data-site-downloads>17</strong></span>
-    </div>
-    <small data-site-stats-note>起始值</small>
+    <span>浏览 <strong data-site-views>—</strong></span>
+    <span>下载 <strong data-site-downloads>—</strong></span>
   </div>
   <a class="action" href="孟子鉴-简历.pdf" download="孟子鉴-简历.pdf" data-resume-download>下载简历 PDF</a>
 </div></div></header>
